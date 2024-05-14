@@ -8,7 +8,7 @@ function App() {
   const [openTree, setTree] = useState(false)
 
   return (
-    <div className='flex justify-center items-center h-[100vh] bg-gradient-to-r from-blue-200 to-green-300'>
+    <div className='flex justify-center items-center h-[100vh] bg-gradient-to-r from-blue-100 to-green-100'>
 
       {!openTree ? <button className='border p-3 bg-gradient-to-r from-orange-300 to-orange-500 rounded-xl font-bold hover:text-white ' onClick={() => setTree(!openTree)}>Open Location Tree</button> : <LocationTree />}
 
