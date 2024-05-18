@@ -79,8 +79,10 @@ const LocationTree = () => {
     };
 
     const handleDropItem = (item) => {
-        if (item.id !== dragItem.id)
-            setAllData(moveItem(allData, dragItem, item));
+
+        if (item.id !== dragItem.id && !dragItem.locations.some(element => element.id === item.id)) {
+            setAllData(moveItem(allData, dragItem, item))
+        }
         setSelectLoc(dragItem)
         setDragItem(null);
 
