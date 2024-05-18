@@ -32,7 +32,6 @@ const Location = (props) => {
   const handleOver = (e) => {
     e.stopPropagation();
     e.preventDefault()
-    console.log(e);
   }
 
   return (

@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import LocationTree from './components/LocationTree'
 
 function App() {
@@ -10,7 +8,7 @@ function App() {
   return (
     <div className='flex justify-center items-center h-[100vh] bg-white'>
 
-      {!openTree ? <button className='border p-3 bg-gradient-to-r from-orange-300 to-orange-500 rounded-xl font-bold hover:text-white ' onClick={() => setTree(!openTree)}>Open Location Tree</button> : <LocationTree />}
+      {!openTree ? <button className='border-2 border-black p-3 bg-white rounded-xl font-bold hover:text-white hover:bg-black' onClick={() => setTree(!openTree)}>Open Location Tree</button> : <LocationTree />}
 
     </div>
   )

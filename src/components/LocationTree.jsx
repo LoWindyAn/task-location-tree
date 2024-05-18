@@ -8,7 +8,7 @@ import { ImSpinner3 } from "react-icons/im";
 const LocationTree = () => {
     const [data, setData] = useState(null);
     const [allData, setAllData] = useState([]);
-    const [visible, setVisible] = useState(6);
+    const [visible, setVisible] = useState(10);
     const [isData, setIsData] = useState(true);
     const [dragItem, setDragItem] = useState(null);
     const [selectLoc, setSelectLoc] = useState(null);
@@ -20,7 +20,7 @@ const LocationTree = () => {
         const fetchData = async () => {
             const res = await axios.get("https://66433cbc3c01a059ea221251.mockapi.io/api/locationtree/location");
             setAllData(res.data);
-            setData(res.data.slice(0, 6));
+            setData(res.data.slice(0, 10));
             setIsData(false);
         };
 
@@ -65,7 +65,6 @@ const LocationTree = () => {
         setInput('')
     }
 
-
     const LoadMore = () => {
         setData(allData.slice(0, visible));
         setVisible(visible + 2);
@@ -80,8 +79,11 @@ const LocationTree = () => {
     };
 
     const handleDropItem = (item) => {
-        if (item.is_area && item.id !== dragItem.id && !item.locations.some(element => element.id === dragItem.id))
+        if (item.id !== dragItem.id)
             setAllData(moveItem(allData, dragItem, item));
+        setSelectLoc(dragItem)
+        setDragItem(null);
+
     };
 
     const moveItem = (locations, dragItem, item) => {
@@ -103,16 +105,16 @@ const LocationTree = () => {
         const addItem = (locations, dragItem, item) => {
             let newLocations = [];
 
-            locations.map((location, index) => {
-                if (location.id == item.id) {
-                    location.locations = [...location.locations, dragItem];
-                    setDragItem(null);
-                    newLocations.push(location);
-                    return;
-                }
-                if (location.is_area) {
-                    location.locations = addItem(location.locations, dragItem, item);
-                }
+            locations.map((location) => {
+                if (location.id == item.id && item.is_area) {
+                    location.locations.splice(0, 0, dragItem)
+                } else
+                    if (location.id == item.id && !item.is_area) {
+                        newLocations.push(dragItem)
+                    } else
+                        if (location.id != item.id && location.is_area) {
+                            location.locations = addItem(location.locations, dragItem, item);
+                        }
                 newLocations.push(location);
             });
             return newLocations;
@@ -137,7 +139,7 @@ const LocationTree = () => {
                 <input type="text" value={input} className="w-full border pl-6 h-8 outline-[#c6c4c4]" onChange={handleOnChangeSearch} />
                 <MdOutlineClose className="absolute right-5 font-semibold text-[16px] text-[#c6c4c4] hover:text-[#b3b3b3] cursor-pointer" onClick={handleClickClose} />
             </div>
-            <div ref={containerRef} className=" h-[400px]  p-4 overflow-y-scroll custom-scroll">
+            <div ref={containerRef} className=" h-[300px]  p-4 overflow-y-scroll custom-scroll">
                 {
                     isData ? <div className="flex justify-center gap-2 italic text-gray-500"><ImSpinner3 className="animate-spin size-6" /></div>
                         : data && data.map((item, index) => (
