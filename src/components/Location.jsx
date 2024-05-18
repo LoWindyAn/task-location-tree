@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IoIosFolder, IoIosFolderOpen } from 'react-icons/io';
+import { IoIosFolder, IoIosFolderOpen, IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import { IoLocationSharp } from 'react-icons/io5';
 
 const Location = (props) => {
@@ -29,24 +29,32 @@ const Location = (props) => {
     handleDropItem(item);
   };
 
+  const handleOver = (e) => {
+    e.stopPropagation();
+    e.preventDefault()
+    console.log(e);
+  }
+
   return (
     <div className='flex flex-col mt-1'
       draggable
       onDragStart={handleOnDragStart}
       onDrop={handleDrop}
-      onDragOver={e => e.preventDefault()}
+      onDragOver={handleOver}
     >
       {selectLoc && selectLoc.id === item.id
         ? (
-          <div className='flex items-center gap-2 cursor-pointer' onClick={changeOpen} >
-            {!item.is_area ? <IoLocationSharp className='text-[#c6c4c4] size-5' /> : openFolder ? <IoIosFolderOpen className='text-[#c6c4c4] size-5' /> : <IoIosFolder className='text-[#c6c4c4] size-5' />}
+          <div className='flex items-center gap-2 cursor-pointer hover:bg-[#d6ecfe]' onClick={changeOpen} >
+            {!item.is_area ? <IoLocationSharp className='text-[#a1a1a1] size-5' /> : openFolder ? <IoIosFolderOpen className='text-[#a1a1a1] size-5' /> : <IoIosFolder className='text-[#a1a1a1] size-5' />}
             <p className='text-[#4c73dd] font-semibold'>{item.label}</p>
+            {!item.is_area ? "" : openFolder ? <IoMdArrowDropup className='icon rotate-animation' /> : <IoMdArrowDropdown className='icon rotate-animation' />}
           </div>
         )
         : (
-          <div className='flex items-center gap-2 cursor-pointer' onClick={changeOpen} >
-            {!item.is_area ? <IoLocationSharp className='text-[#c6c4c4] size-5' /> : openFolder ? <IoIosFolderOpen className='text-[#c6c4c4] size-5' /> : <IoIosFolder className='text-[#c6c4c4] size-5' />}
-            <p className='text-[#5c5c5c] hover:text-[#65b5f6] font-semibold'>{item.label}</p>
+          <div className='flex items-center gap-2 cursor-pointer hover:bg-[#d6ecfe]' onClick={changeOpen} >
+            {!item.is_area ? <IoLocationSharp className='text-[#a1a1a1] size-5' /> : openFolder ? <IoIosFolderOpen className='text-[#a1a1a1] size-5' /> : <IoIosFolder className='text-[#a1a1a1] size-5' />}
+            <p className='text-[#5c5c5c]  font-semibold'>{item.label}</p>
+            {!item.is_area ? "" : openFolder ? <IoMdArrowDropup className='icon rotate-animation' /> : < IoMdArrowDropdown className='icon rotate-animation' />}
           </div>
         )
       }

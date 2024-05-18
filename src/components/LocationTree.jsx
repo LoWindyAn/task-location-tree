@@ -8,7 +8,7 @@ import { ImSpinner3 } from "react-icons/im";
 const LocationTree = () => {
     const [data, setData] = useState(null);
     const [allData, setAllData] = useState([]);
-    const [visible, setVisible] = useState(16);
+    const [visible, setVisible] = useState(6);
     const [isData, setIsData] = useState(true);
     const [dragItem, setDragItem] = useState(null);
     const [selectLoc, setSelectLoc] = useState(null);
@@ -20,7 +20,7 @@ const LocationTree = () => {
         const fetchData = async () => {
             const res = await axios.get("https://66433cbc3c01a059ea221251.mockapi.io/api/locationtree/location");
             setAllData(res.data);
-            setData(res.data.slice(0, 16));
+            setData(res.data.slice(0, 6));
             setIsData(false);
         };
 
@@ -137,7 +137,7 @@ const LocationTree = () => {
                 <input type="text" value={input} className="w-full border pl-6 h-8 outline-[#c6c4c4]" onChange={handleOnChangeSearch} />
                 <MdOutlineClose className="absolute right-5 font-semibold text-[16px] text-[#c6c4c4] hover:text-[#b3b3b3] cursor-pointer" onClick={handleClickClose} />
             </div>
-            <div ref={containerRef} className="h-[400px] p-4 overflow-y-scroll">
+            <div ref={containerRef} className=" h-[400px]  p-4 overflow-y-scroll custom-scroll">
                 {
                     isData ? <div className="flex justify-center gap-2 italic text-gray-500"><ImSpinner3 className="animate-spin size-6" /></div>
                         : data && data.map((item, index) => (
